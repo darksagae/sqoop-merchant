@@ -1,0 +1,91 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: #f6f5f2;
+  --color-surface: #ffffff;
+  --color-sunken: #f0eee9;
+  --color-ink: #15161c;
+  --color-ink-soft: #5f6170;
+  --color-line: #e5e2db;
+  --color-line-strong: #cfcbc1;
+  --color-brand: #f0641e;
+  --color-brand-strong: #c2410c;
+  --color-brand-soft: #fdeee4;
+  --color-on-brand: #ffffff;
+  --color-nav: #15161c;
+  --color-nav-ink: #b7b9c6;
+  --color-nav-active: #272934;
+  --color-good: #047857;
+  --color-bad: #b42318;
+  --color-bad-soft: #fdecea;
+
+  --shadow-card: 0 1px 2px rgb(21 22 28 / 0.04), 0 6px 20px -10px rgb(21 22 28 / 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-canvas: #0e0f13;
+    --color-surface: #16171d;
+    --color-sunken: #1d1f27;
+    --color-ink: #ecedf2;
+    --color-ink-soft: #9b9dac;
+    --color-line: #272934;
+    --color-line-strong: #3a3d4a;
+    --color-brand: #ff7a33;
+    --color-brand-strong: #ff8a4c;
+    --color-brand-soft: #3a2012;
+    --color-on-brand: #1a0d05;
+    --color-nav: #0a0b0e;
+    --color-nav-active: #1f212a;
+    --color-good: #34d399;
+    --color-bad: #ff8a80;
+    --color-bad-soft: #3a1b19;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    font-feature-settings: 'tnum' 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-surface shadow-(--shadow-card);
+  }
+  .btn {
+    @apply inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand-strong text-on-brand hover:bg-brand;
+  }
+  .btn-secondary {
+    @apply border border-line-strong bg-surface text-ink hover:bg-sunken;
+  }
+  .btn-ghost {
+    @apply text-ink-soft hover:bg-sunken hover:text-ink;
+  }
+  .btn-danger {
+    @apply border border-bad/30 bg-bad-soft text-bad hover:border-bad;
+  }
+  .input {
+    @apply min-h-10 w-full rounded-xl border border-line-strong bg-surface px-3.5 py-2 text-sm text-ink transition-colors placeholder:text-ink-soft/70 focus:border-brand focus:ring-4 focus:ring-brand/15 focus:outline-none aria-invalid:border-bad;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
