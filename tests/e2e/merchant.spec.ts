@@ -18,7 +18,7 @@ test('an owner sets up a shop, sells, and sees it in reports and billing', async
   await expect(page.getByText('Business name is required.')).toBeVisible()
 
   const email = await signUp(page, 'Nakato Store')
-  await expect(page.getByRole('heading', { name: 'Welcome, Test' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Get started' })).toBeVisible()
 
   await page.goto('/app/products/new')
   await page.getByLabel('Product name').fill('Sugar 1 kg')
@@ -73,7 +73,8 @@ test('an owner sets up a shop, sells, and sees it in reports and billing', async
 
 test('the live demo opens a seeded workspace', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: 'Explore the live demo' }).click()
+  await expect(page).toHaveURL(/\/login$/)
+  await page.getByRole('button', { name: 'Try the demo shop' }).click()
   await page.waitForURL('**/app')
   await expect(page.getByText('demo shop with sample data')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Recent orders' })).toBeVisible()

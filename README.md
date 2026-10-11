@@ -7,7 +7,7 @@ Built for Galuxium Nexus V2.
 ## Features
 
 - **Workspaces:** each shop signs up for its own isolated workspace (business, owner account and first store). Every query is scoped to the signed-in workspace.
-- **Live demo:** one click creates a fresh demo shop with 12 products, 2 branches and two weeks of orders.
+- **Live demo:** "Try the demo shop" on the sign-in page creates a fresh demo shop with 12 products, 2 branches and two weeks of orders.
 - **Products:** SKU, price, stock and reorder level; low-stock flags; search; archive and restore; total stock value.
 - **Orders:** a fast order builder with product search, quantity steppers that can't exceed stock, a running total, optional customer details, and paid-now or pay-later.
   - Status flow: pending → paid (cash / mobile money / card) → fulfilled, or cancel.
@@ -15,7 +15,7 @@ Built for Galuxium Nexus V2.
   - Order numbers are sequential per workspace, and receipts print cleanly.
 - **Dashboard:** revenue this month vs last, paid orders, average order, open orders, a 14-day revenue chart, low stock, recent orders and best sellers.
 - **Stores & team:** add and rename branches. Owners add or remove staff and rename the business; staff can sell and manage products.
-- **Billing:** live usage meters (stores, team members, non-cancelled orders this month) and an itemised estimate, monthly or annual. The pricing is the same function the public calculator uses.
+- **Billing:** live usage meters (stores, team members, non-cancelled orders this month) and an itemised estimate, monthly or annual. The logic lives in `lib/pricing.ts`.
 
 ## Pricing model
 
@@ -47,8 +47,8 @@ Set `SQOOP_SECURE_COOKIES=1` when serving over HTTPS without a proxy that sends 
 Next.js 16 (App Router, Server Actions) · React 19 · TypeScript · Tailwind CSS 4 · zod · SQLite via Node's built-in `node:sqlite` · Vitest · Playwright.
 
 ```
-app/                   landing, (auth)/login|signup, app/* (dashboard, orders, products, settings, billing)
-components/            UI: order builder, pricing calculator, revenue chart, forms
+app/                   (auth)/login|signup, app/* (dashboard, orders, products, settings, billing)
+components/            UI: order builder, revenue chart, forms
 lib/
   repo/                accounts, team, stores, products, orders, stats, demo (all workspace-scoped)
   actions/             server actions for auth, catalogue, orders, settings

@@ -21,18 +21,16 @@ export default async function DashboardPage() {
   const user = await requireUser()
   const stats = dashboard(user.workspaceId)
   const hasProducts = listProducts(user.workspaceId).length > 0
-  const firstName = user.name.split(' ')[0]
 
   if (!hasProducts && stats.recentOrders.length === 0) {
-    return <Welcome name={firstName} />
+    return <Welcome />
   }
 
   const change = stats.revenueChange
   return (
     <>
       <PageHeader
-        title={`Hello, ${firstName}`}
-        description="Here’s how your shop is doing this month."
+        title="Dashboard"
         actions={
           <Link href="/app/orders/new" className="btn btn-primary">
             <Plus className="size-4" aria-hidden="true" /> New order
@@ -162,7 +160,7 @@ function Kpi({ label, value, children }: { label: string; value: string; childre
   )
 }
 
-function Welcome({ name }: { name: string }) {
+function Welcome() {
   const steps = [
     {
       icon: Package,
@@ -185,7 +183,7 @@ function Welcome({ name }: { name: string }) {
   ]
   return (
     <>
-      <PageHeader title={`Welcome, ${name}`} description="Three steps to get your shop running on Sqoop." />
+      <PageHeader title="Get started" />
       <ol className="grid gap-4 md:grid-cols-3">
         {steps.map(({ icon: Icon, title, body, href }, index) => (
           <li key={title}>

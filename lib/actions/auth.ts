@@ -42,7 +42,7 @@ export async function signOut() {
 }
 
 export async function startDemo() {
-  if (!allow(`demo:${await clientAddress()}`, 10, 60 * 60_000)) redirect('/?demo=busy')
+  if (!allow(`demo:${await clientAddress()}`, 10, 60 * 60_000)) redirect('/login?demo=busy')
   const { userId } = await createDemoWorkspace()
   await startSession(userId)
   redirect('/app')

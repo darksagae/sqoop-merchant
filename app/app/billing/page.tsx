@@ -61,19 +61,6 @@ export default async function BillingPage({ searchParams }: { searchParams: Prom
               })}
             </ul>
           </section>
-
-          <section className="card p-5 sm:p-6" aria-labelledby="plan-title">
-            <h2 id="plan-title" className="font-semibold">
-              How pricing works
-            </h2>
-            <p className="mt-2 text-sm text-ink-soft">
-              One plan, no tiers. {ugx(PLAN.base)} a month includes {PLAN.included.stores} store, {PLAN.included.users}{' '}
-              team members and {PLAN.included.orders} orders. Beyond that you pay only for what you use:{' '}
-              {ugx(PLAN.extra.store)} per extra store, {ugx(PLAN.extra.user)} per extra team member and{' '}
-              {ugx(PLAN.extra.order)} per extra order. Cancelled orders are never counted. Pay yearly and get two months
-              free.
-            </p>
-          </section>
         </div>
 
         <aside className="card p-5 sm:p-6" aria-labelledby="estimate-title">
@@ -125,7 +112,7 @@ export default async function BillingPage({ searchParams }: { searchParams: Prom
           </div>
           <p className="mt-4 flex gap-2 text-xs text-ink-soft">
             <Info className="size-4 shrink-0" aria-hidden="true" />
-            Estimate only. This prototype does not collect payments.
+            Estimate only — no payments are collected. Cancelled orders are not counted.
           </p>
         </aside>
       </div>
