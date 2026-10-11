@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createWorkspace } from '@/lib/repo/accounts'
 import { createOrder, getOrder, listOrders, transitionOrder } from '@/lib/repo/orders'
 import { createProduct, getProduct, listProducts, setArchived, updateProduct } from '@/lib/repo/products'
+import { db } from '@/lib/db'
 import { createDemoWorkspace } from '@/lib/repo/demo'
 import { dashboard, usage } from '@/lib/repo/stats'
 import { addStore, listStores } from '@/lib/repo/stores'
@@ -157,5 +158,18 @@ describe('orders and stock', () => {
     expect(stats.lowStock.length).toBeGreaterThan(0)
     expect(listStores(workspaceId)).toHaveLength(2)
     expect(listOrders(workspaceId, { status: 'pending' }).length).toBeGreaterThan(0)
+  })
+
+  it('clears out demo shops older than a week, but never real ones', async () => {
+    const old = (await createDemoWorkspace()).workspaceId
+    const { workspaceId: real } = await shop()
+    const longAgo = new Date(Date.now() - 8 * 24 * 60 * 60_000).toISOString()
+    db().prepare('UPDATE workspaces SET created_at = ? WHERE id IN (?, ?)').run(longAgo, old, real)
+
+    const fresh = (await createDemoWorkspace()).workspaceId
+    const ids = (db().prepare('SELECT id FROM workspaces').all() as { id: string }[]).map((row) => row.id)
+    expect(ids).toEqual(expect.arrayContaining([real, fresh]))
+    expect(ids).not.toContain(old)
+    expect(db().prepare('SELECT COUNT(*) AS n FROM orders WHERE workspace_id = ?').get(old)).toEqual({ n: 0 })
   })
 })

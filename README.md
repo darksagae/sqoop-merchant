@@ -7,7 +7,7 @@ Built for Galuxium Nexus V2.
 ## Features
 
 - **Workspaces:** each shop signs up for its own isolated workspace (business, owner account and first store). Every query is scoped to the signed-in workspace.
-- **Live demo:** "Try the demo shop" on the sign-in page creates a fresh demo shop with 12 products, 2 branches and two weeks of orders.
+- **Live demo:** opening the site drops a new visitor straight into a fresh demo shop with 12 products, 2 branches and two weeks of orders ("Try the demo shop" on the sign-in page does the same). Demo shops are deleted after a week.
 - **Products:** SKU, price, stock and reorder level; low-stock flags; search; archive and restore; total stock value.
 - **Orders:** a fast order builder with product search, quantity steppers that can't exceed stock, a running total, optional customer details, and paid-now or pay-later.
   - Status flow: pending → paid (cash / mobile money / card) → fulfilled, or cancel.
@@ -72,7 +72,7 @@ Production: `npm run build && npm start`. Data is stored in `data/sqoop.sqlite3`
 ## Test
 
 ```sh
-npm test               # 16 unit tests
+npm test               # 17 unit tests
 npm run lint           # formatting and type check
 npm run build && npm run test:e2e   # 3 browser journeys on desktop and mobile
 ```

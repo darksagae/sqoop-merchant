@@ -53,6 +53,7 @@ test('an owner sets up a shop, sells, and sees it in reports and billing', async
 
   // Another workspace cannot open this order.
   await page.getByRole('button', { name: 'Sign out' }).last().click()
+  await page.waitForURL('**/login')
   await signUp(page, 'Other Shop')
   const response = await page.goto(orderUrl)
   expect(response?.status()).toBe(404)
@@ -71,10 +72,8 @@ test('an owner sets up a shop, sells, and sees it in reports and billing', async
   await expect(page.getByText('Nakato Store').filter({ visible: true })).toBeVisible()
 })
 
-test('the live demo opens a seeded workspace', async ({ page }) => {
+test('visitors land straight in a seeded demo shop', async ({ page }) => {
   await page.goto('/')
-  await expect(page).toHaveURL(/\/login$/)
-  await page.getByRole('button', { name: 'Try the demo shop' }).click()
   await page.waitForURL('**/app')
   await expect(page.getByText('demo shop with sample data')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Recent orders' })).toBeVisible()

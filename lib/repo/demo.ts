@@ -82,7 +82,12 @@ export function seedDemoData(workspaceId: string, userId: string, seed = 42, now
   })
 }
 
+// Every new visitor gets a demo shop, so old ones are cleared out (with their data) after a week.
+const DEMO_LIFETIME_MS = 7 * 24 * 60 * 60_000
+
 export async function createDemoWorkspace() {
+  const expired = new Date(Date.now() - DEMO_LIFETIME_MS).toISOString()
+  db().prepare('DELETE FROM workspaces WHERE is_demo = 1 AND created_at < ?').run(expired)
   const suffix = crypto.randomUUID().slice(0, 8)
   const { workspaceId, userId } = await createWorkspace({
     businessName: 'Demo Mart',

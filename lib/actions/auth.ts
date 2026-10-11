@@ -38,7 +38,7 @@ export async function signIn(_: FormState, form: FormData): Promise<FormState> {
 
 export async function signOut() {
   await endSession()
-  redirect('/')
+  redirect('/login')
 }
 
 export async function startDemo() {
